@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.example.myplugin'
+    id 'com.example.greeting'
 }
 
 android {
@@ -31,6 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+}
+
+greeting{
+    message = "qwe"
 }
 
 dependencies {
