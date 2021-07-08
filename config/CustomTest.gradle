@@ -20,7 +20,7 @@ tasks.register("helloWordConfig",GreetingTask.class){//使用配置的GreetingTa
 }
 tasks.register('helloWord', GreetingTask.class)//使用默认的GreetingTask
 
-
+/*
 //2、定义增量任务操作
 abstract class IncrementalReverseTask extends DefaultTask{
 
@@ -76,7 +76,7 @@ tasks.register('removeOutput') {
     doLast {
         file("$buildDir/outputs/1.txt").delete()//删除1.txt
     }
-}
+}*/
 
 
 
