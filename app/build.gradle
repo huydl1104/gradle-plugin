@@ -1,8 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'com.example.myplugin'
-    id 'com.example.greeting'
+//    id 'com.example.myplugin'
+//    id 'com.example.greeting'
+    id 'com.example.buildtimecost'
 }
 
 android {
@@ -34,8 +35,13 @@ android {
     }
 }
 
-greeting{
+/*greeting{
     message = "qwe"
+}*/
+
+taskExecTime {
+    threshold 100
+    sorted true
 }
 
 dependencies {
