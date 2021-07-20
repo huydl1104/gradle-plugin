@@ -14,7 +14,7 @@ gradlePlugin {
     plugins {
         create("myplugin") {
             id = "com.example.myplugin"
-            implementationClass = "com.example.myplugin.MyPlugin"
+            implementationClass = "com.example.myplugin.AnalyticsPlugin"
         }
     }
 }
@@ -46,4 +46,16 @@ javadoc {
 }
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation gradleApi()
+
+    //引入asm库
+    implementation 'org.ow2.asm:asm:9.2'
+    implementation 'org.ow2.asm:asm-commons:7.0'
+    implementation 'org.ow2.asm:asm-analysis:7.0'
+    implementation 'org.ow2.asm:asm-util:7.0'
+    implementation 'org.ow2.asm:asm-tree:7.0'
+    compileOnly 'com.android.tools.build:gradle:4.1.1', {//这里注意需要保持版本一致，否则会报错
+        //排除gradle自带的asm库
+        exclude group:'org.ow2.asm'
+    }
 }
