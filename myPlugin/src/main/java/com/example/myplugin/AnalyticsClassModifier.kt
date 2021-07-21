@@ -49,8 +49,8 @@ object AnalyticsClassModifier {
         AnalyticsUtils.log("need Modify：>>>" + className+" 测试"+ File.separator)
         return true
     }
-    fun notifyClassFile(inputDir: File, inputFile: File, temporaryDir: File):File {
-
+    fun notifyClassFile(inputDir: File, inputFile: File, temporaryDir: File):File? {
+        return null
     }
 
 }

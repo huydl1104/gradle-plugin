@@ -79,9 +79,11 @@ class AnalyticsTransform(private val target: Project, private val extension: Ana
                     }.toHashSet().forEach { classFile ->
                         if (AnalyticsClassModifier.isShouldNotify(classFile.name,extension)){
                             val notifyFile =  AnalyticsClassModifier.notifyClassFile(inputDir,classFile,transformInvocation.context.temporaryDir)
-                            val key = classFile.absolutePath.replace(inputDir.absolutePath, "")
-                            AnalyticsUtils.log("classFile ${classFile.absolutePath}  , inputDir ->${inputDir.absolutePath}  ,key ->$key")
-                            notifyMap[key] = notifyFile
+                            if (notifyFile != null){
+                                val key = classFile.absolutePath.replace(inputDir.absolutePath, "")
+                                AnalyticsUtils.log("classFile ${classFile.absolutePath}  , inputDir ->${inputDir.absolutePath}  ,key ->$key")
+                                notifyMap[key] = notifyFile
+                            }
                         }
                     }
                     FileUtils.copyDirectory(directory.file,dest)
