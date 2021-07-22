@@ -12,6 +12,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/asmTest" />
             <option value="$PROJECT_DIR$/buildTimeCost" />
             <option value="$PROJECT_DIR$/greeting" />
             <option value="$PROJECT_DIR$/myPlugin" />

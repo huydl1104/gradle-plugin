@@ -1,0 +1,39 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    // 核心 API，定义了基于事件的 API，以及提供了类分析和写入组件
+    implementation 'org.ow2.asm:asm:9.2'
+    // 提供了各种基于核心 API 的工具，可以在 ASM 应用程序的开发和调试过程中使用
+    implementation 'org.ow2.asm:asm-util:9.2'
+    // 提供了几个很有用的预定义类转换器，它们大多是基于核心 API
+    implementation 'org.ow2.asm:asm-commons:9.2'
+    // 定义了基于对象的 API，以及提供了和事件 API 之间互相转换的工具
+    implementation 'org.ow2.asm:asm-tree:9.2'
+    // 提供了一个基于树 API 的类分析框架和几个预定义的类分析器
+    implementation 'org.ow2.asm:asm-analysis:9.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

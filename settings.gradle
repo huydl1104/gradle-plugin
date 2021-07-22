@@ -1,3 +1,4 @@
+include ':asmTest'
 include ':buildTimeCost'
 include ':greeting'
 include ':myPlugin'
