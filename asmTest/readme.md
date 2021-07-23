@@ -1,2 +1,169 @@
+# 字节码指令集
+## 加载和存储指令
+   1)将一个局部变量加载到操作数栈的指令包括：iload,iload_<n\>，lload、lload_<n\>、float、 fload_<n\>、dload、dload_<n\>，aload、aload_<n\>。
+   2)将一个数值从操作数栈存储到局部变量表的指令：istore,istore_<n\>,lstore,lstore_<n\>,fstore,fstore_<n\>,dstore,dstore_<n\>,astore,astore_<n\>
+   3)将常量加载到操作数栈的指令：bipush,sipush,ldc,ldc_w,ldc2_w,aconst_null,iconst_ml,iconst_<i\>,lconst_<l\>,fconst_<f\>,dconst_<d\>
+   4)局部变量表的访问索引指令:wide
+   一部分以尖括号结尾的指令代表了一组指令，如iload_<i>，代表了iload_0,iload_1等，这几组指令都是带有一个操作数的通用指令。
+   
+## 运算指令
+   1)加法指令:iadd,ladd,fadd,dadd
+   2)减法指令:isub,lsub,fsub,dsub
+   3)乘法指令:imul,lmul,fmul,dmul
+   4)除法指令:idiv,ldiv,fdiv,ddiv
+   5)求余指令:irem,lrem,frem,drem
+   6)取反指令:ineg,leng,fneg,dneg
+   7)位移指令:ishl,ishr,iushr,lshl,lshr,lushr
+   8)按位或指令:ior,lor
+   9)按位与指令:iand,land
+   10)按位异或指令:ixor,lxor
+   11)局部变量自增指令:iinc
+   12)比较指令:dcmpg,dcmpl,fcmpg,fcmpl,lcmp
+  
+## 类型转换指令   
+但在处理窄化类型转换时，必须显式使用转换指令来完成，这些指令包括：i2b、i2c、i2s、l2i、f2i、f2l、d2i、d2l和 d2f。
+将int 或 long 窄化为整型T的时候，仅仅简单的把除了低位的N个字节以外的内容丢弃，N是T的长度。这有可能导致转换结果与输入值有不同的正负号。
+在将一个浮点值窄化为整数类型T（仅限于 int 和 long 类型），将遵循以下转换规则：
+   1）如果浮点值是NaN ， 呐转换结果就是int 或 long 类型的0
+   2）如果浮点值不是无穷大，浮点值使用IEEE 754 的向零舍入模式取整，获得整数v， 如果v在T表示范围之内，那就过就是v
+   3）否则，根据v的符号， 转换为T 所能表示的最大或者最小正数
+   
+## 对象创建与访问指令
+虽然类实例和数组都是对象，Java虚拟机对类实例和数组的创建与操作使用了不同的字节码指令。
+   1)创建实例的指令:new
+   2)创建数组的指令:newarray,anewarray,multianewarray
+   3)访问字段指令:getfield,putfield,getstatic,putstatic
+   4)把数组元素加载到操作数栈指令:baload,caload,saload,iaload,laload,faload,daload,aaload
+   5)将操作数栈的数值存储到数组元素中执行:bastore,castore,castore,sastore,iastore,fastore,dastore,aastore
+   6)取数组长度指令:arraylength JVM支持方法级同步和方法内部一段指令序列同步，这两种都是通过moniter实现的。
+   7)检查实例类型指令:instanceof,checkcast
+   
+## 操作数栈管理指令
+如同操作一个普通数据结构中的堆栈那样，Java 虚拟机提供了一些用于直接操作操作数栈的指令，包括   
+   1）将操作数栈的栈顶一个或两个元素出栈：pop、pop2
+   2）复制栈顶一个或两个数值并将复制值或双份的复制值重新压入栈顶：dup、dup2、dup_x1、dup2_x1、dup_x2、dup2_x2。
+   3）将栈最顶端的两个数值互换：swap
+
+## 控制转移指令
+让JVM有条件或无条件从指定指令而不是控制转移指令的下一条指令继续执行程序。控制转移指令包括：
+   1)条件分支:ifeq,iflt,ifle,ifne,ifgt,ifge,ifnull,ifnotnull,if_cmpeq,if_icmpne,if_icmlt,if_icmpgt等
+   2)复合条件分支:tableswitch,lookupswitch
+   3)无条件分支:goto,goto_w,jsr,jsr_w,ret
+JVM中有专门的指令集处理int和reference类型的条件分支比较操作，为了可以无明显标示一个实体值是否是null,有专门的指令检测null 值。
+boolean类型和byte类型,char类型和short类型的条件分支比较操作，都使用int类型的比较指令完成，而 long,float,double条件分支比较操作，
+由相应类型的比较运算指令，运算指令会返回一个整型值到操作数栈中，随后再执行int类型的条件比较操作完成整个分支跳转。各种类型的比较都最终会转化为int类型的比较操作。
+
+## 方法调用和返回值
+   invokevirtual指令:调用对象的实例方法，根据对象的实际类型进行分派(虚拟机分派)。
+   invokeinterface指令:调用接口方法，在运行时搜索一个实现这个接口方法的对象，找出合适的方法进行调用。
+   invokespecial:调用需要特殊处理的实例方法，包括实例初始化方法，私有方法和父类方法
+   invokestatic:调用类方法(static)
+方法返回指令是根据返回值的类型区分的，包括ireturn(返回值是boolean,byte,char,short和 int),lreturn,freturn,drturn和areturn，
+另外一个return供void方法，实例初始化方法，类和接口的类初始化i方法使用。
+
+## 异常处理指令
+   在Java程序中显式抛出异常的操作（throw语句）都有athrow 指令来实现，除了用throw 语句显示抛出异常情况外，
+Java虚拟机规范还规定了许多运行时异常会在其他Java虚拟机指令检测到异常状况时自动抛出。在Java虚拟机中，处理异常不是由字节码指令来实现的，而是采用异常表来完成的。
+
+## 同步指令
+方法级的同步是隐式的，无需通过字节码指令来控制，它实现在方法调用和返回操作中。虚拟机从方法常量池中的方法标结构中的 ACC_SYNCHRONIZED标志区分是否是同步方法。
+方法调用时，调用指令会检查该标志是否被设置，若设置，执行线程持有moniter，然后执行方法，最后完成方法时释放moniter。
+同步一段指令集序列，通常由synchronized块标示，JVM指令集中有monitorenter和monitorexit来支持synchronized语义。
+结构化锁定是指方法调用期间每一个monitor退出都与前面monitor进入相匹配的情形。JVM通过以下两条规则来保证结结构化锁成立(T代表一线程，M代表一个monitor)：
+        1)T在方法执行时持有M的次数必须与T在方法完成时释放的M次数相等
+        2)任何时刻都不会出现T释放M的次数比T持有M的次数多的情况
+        
+```
+public class Demo {
+    private static final String HELLO_CONST = "Hello";
+    private static String CONST = null;
+
+    static {
+        CONST = HELLO_CONST + "%s!";
+    }
+
+    public static void main(String[] args) {
+        if (args != null && args.length == 1) {
+            System.out.println(String.format(CONST, args[0]));
+        }
+    }
+}
+
+
+public class com/taobao/film/Demo {
+
+  // compiled from: Demo.java
+
+  // access flags 0x1A 常量,类被装载时分配空间 private static final String HELLO_CONST = "Hello";
+  private final static Ljava/lang/String; HELLO_CONST = "Hello"
+
+  // access flags 0xA 静态属性,类被装载时分配空间 private static String CONST ;
+  private static Ljava/lang/String; CONST
+
+  // access flags 0x1 没有重载构造函数，默认构造函数<init>()V
+  public <init>()V
+   L0 // 标签表示方法的字节码中的位置。标签用于跳转，goto和切换指令，以及用于尝试catch块。标签指定刚刚之后的指令。注意，在标签和它指定的指令（例如其他标签，堆栈映射帧，行号等）之间可以有其他元素。
+    LINENUMBER 6 L0 //异常的栈信息中对应的line number，可删除不影响运行
+    ALOAD 0 //this
+    INVOKESPECIAL java/lang/Object.<init> ()V //this.super()
+    RETURN
+   L1
+    LOCALVARIABLE this Lcom/taobao/film/Demo; L0 L1 0
+    MAXSTACK = 1 //最大栈深度1,压栈局部变量this
+    MAXLOCALS = 1 //局部变量数1,局部变量this
+
+  // access flags 0x9 简记 ms:操作数栈最大深度 ml:局部变量表最大容量 s:操作数栈 l:局部变量表
+  public static main([Ljava/lang/String;)V
+   L0
+    LINENUMBER 15 L0
+    ALOAD 0 //非静态方法,局部变量0即方法入参第一个参数args reference; ms=1,ml=1,s=[args ref],l=[args ref]
+    IFNULL L1  //if(args ref==null)跳转 L1 return
+    ALOAD 0 //load args ms=1,ml=1,s=[args ref],l=[args ref]
+    ARRAYLENGTH//计算args.length将结果入操作数栈 ms=1,ml=1,s=[args ref],l=[args ref] 
+    ICONST_1 //数字常量1 ms=2,ml=1,s=[1,args ref],l=[args ref] 
+    IF_ICMPNE L1 //if(args.length == 1) 跳转 L1 return 
+   L2 //ms=2,ml=1,s=[],l=[args ref] 
+    LINENUMBER 16 L2
+    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;//访问System.out，入操作数栈 ms=2,ml=1,s=[System.out],l=[args ref]  
+    GETSTATIC com/taobao/film/Demo.CONST : Ljava/lang/String;//访问CONST，入操作数栈 ms=2,ml=1,s=[CONST,System.out],l=[args ref]  
+    {//这里一段，实现的是new Object[]{args[0]},String.format(String format, Object... args) 
+    ICONST_1//1  ms=3,ml=1,s=[1,CONST,System.out],l=[args ref]  
+    ANEWARRAY java/lang/Object// new Object[1]; ms=3,ml=1,s=[objects ref,CONST,System.out],l=[args ref]  
+    DUP // ms=4,ml=1,s=[objects ref,objects ref,CONST,System.out],l=[args ref]  
+    ICONST_0//0 ms=5,ml=1,s=[0,objects ref,objects ref,CONST,System.out],l=[args ref]  
+    ALOAD 0 //args reference入操作数栈; ms=6,ml=1,s=[args ref,0,objects ref,objects ref,CONST,System.out],l=[args ref]  
+    ICONST_0 //0 ms=7,ml=1,s=[0,args ref,0,objects ref,objects ref,CONST,System.out],l=[args ref] 
+    AALOAD //args[0] ms=7,ml=1,s=[args[0],0,objects ref,objects ref,CONST,System.out],l=[args ref]
+    AASTORE //objects[0]=args[0]; ms=7,ml=1,s=[objects ref,CONST,System.out],l=[args ref]
+    }
+    INVOKESTATIC java/lang/String.format (Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;//String.format(CONST,objects) ms=7,ml=1,s=[objects ref,CONST,System.out],l=[args ref]
+    INVOKEVIRTUAL java/io/PrintStream.println (Ljava/lang/String;)V //System.out.println(...); ms=7,ml=1,s=[],l=[args ref]
+   L1
+    LINENUMBER 18 L1
+    RETURN
+   L3
+    LOCALVARIABLE args [Ljava/lang/String; L0 L3 0
+    MAXSTACK = 7
+    MAXLOCALS = 1
+
+  // access flags 0x8 <clinit>V classload init，静态代码初始块，类被装在时init
+  static <clinit>()V
+   L0
+    LINENUMBER 8 L0 
+    ACONST_NULL //压栈常量NULL
+    PUTSTATIC com/taobao/film/Demo.CONST : Ljava/lang/String; //静态属性赋值，CONST=null
+   L1
+    LINENUMBER 11 L1
+    LDC "Hello%s!" //加载常量Hello%s! 编译优化，hello+%s编译优化为常量Hello%s!
+    PUTSTATIC com/taobao/film/Demo.CONST : Ljava/lang/String;//赋值Hello%s!
+   L2
+    LINENUMBER 12 L2
+    RETURN
+    MAXSTACK = 1 //只有赋值操作，操作数栈深度1
+    MAXLOCALS = 0 //静态方法无局部变量
+}
+
+```        
+        
 
 
