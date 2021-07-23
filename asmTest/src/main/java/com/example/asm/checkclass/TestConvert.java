@@ -1,7 +1,6 @@
 package com.example.asm.checkclass;
 
-import com.example.asm.lifecycle.ClassPrintVisitor;
-import com.example.asm.utils.ADLog;
+import com.example.asm.utils.LogUtils;
 import com.example.asm.utils.AccessCodeUtils;
 import com.example.asm.utils.ClassOutputUtil;
 
@@ -34,7 +33,7 @@ public class TestConvert {
 
         @Nullable
         public MethodVisitor visitMethod(int access, @Nullable String name, @Nullable String descriptor, @Nullable String signature, @Nullable String[] exceptions) {
-            ADLog.INSTANCE.info("[visitMethod],access = " + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name = " + name + ",descriptor=" + descriptor + ",signature=" + signature);
+            LogUtils.INSTANCE.info("[visitMethod],access = " + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name = " + name + ",descriptor=" + descriptor + ",signature=" + signature);
             ClassWriter var10000 = this.classWriter;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("classWriter");
@@ -45,7 +44,7 @@ public class TestConvert {
 
         public void visit(int version, int access, @Nullable String name, @Nullable String signature, @Nullable String superName, @Nullable String[] interfaces) {
             this.startTime = System.nanoTime();
-            ADLog.INSTANCE.info("[visit],version = " + version + ",access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name);
+            LogUtils.INSTANCE.info("[visit],version = " + version + ",access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name);
             ClassWriter var10000 = this.classWriter;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("classWriter");
@@ -56,7 +55,7 @@ public class TestConvert {
 
         public void visitEnd() {
             super.visitEnd();
-            ADLog.INSTANCE.info("[visitEnd], time = " + (System.nanoTime() - this.startTime));
+            LogUtils.INSTANCE.info("[visitEnd], time = " + (System.nanoTime() - this.startTime));
         }
     }
 

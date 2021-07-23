@@ -1,12 +1,13 @@
 package com.example.asm.utils
 
-object ADLog {
+object LogUtils {
     private const val TAG = "Andoter"
     var debug = false
 
     /**
      * 输出错误日志
      */
+    @JvmStatic
     fun error(errorMessage: String) {
         try {
             println("${LogUI.ERROR.value}[$TAG]:$errorMessage${LogUI.END.value}")

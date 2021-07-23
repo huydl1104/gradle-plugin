@@ -1,7 +1,7 @@
 package com.example.asm.checkclass;
 
 import com.example.asm.lifecycle.ClassPrintVisitor;
-import com.example.asm.utils.ADLog;
+import com.example.asm.utils.LogUtils;
 import com.example.asm.utils.AccessCodeUtils;
 
 import org.jetbrains.annotations.Nullable;
@@ -34,7 +34,7 @@ public class TestDeleteMethod {
 
         @Nullable
         public MethodVisitor visitMethod(int access, @Nullable String name, @Nullable String descriptor, @Nullable String signature, @Nullable String[] exceptions) {
-            ADLog.INSTANCE.info("visitMethod：access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name=" + name + ',' + "descriptor=" + descriptor + ',' + "signature=" + signature);
+            LogUtils.INSTANCE.info("visitMethod：access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name=" + name + ',' + "descriptor=" + descriptor + ',' + "signature=" + signature);
             if ("setDebugValue".equals(name)) {
                 return null;
             } else {
@@ -47,11 +47,11 @@ public class TestDeleteMethod {
         }
 
         public void visitSource(@Nullable String source, @Nullable String debug) {
-            ADLog.INSTANCE.info("visitSource: source = " + source + ", debug = " + debug);
+            LogUtils.INSTANCE.info("visitSource: source = " + source + ", debug = " + debug);
         }
 
         public void visit(int version, int access, @Nullable String name, @Nullable String signature, @Nullable String superName, @Nullable String[] interfaces) {
-            ADLog.INSTANCE.info("visit: version=" + version + ", access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",signature=" + signature + ",superName=" + superName);
+            LogUtils.INSTANCE.info("visit: version=" + version + ", access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",signature=" + signature + ",superName=" + superName);
             ClassWriter var10000 = this.classWriter;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("classWriter");
@@ -62,7 +62,7 @@ public class TestDeleteMethod {
 
         @Nullable
         public FieldVisitor visitField(int access, @Nullable String name, @Nullable String descriptor, @Nullable String signature, @Nullable Object value) {
-            ADLog.INSTANCE.info("visitField: access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",descriptor=" + descriptor + ',' + "signature=" + signature + ",value=" + value);
+            LogUtils.INSTANCE.info("visitField: access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",descriptor=" + descriptor + ',' + "signature=" + signature + ",value=" + value);
             ClassWriter var10000 = this.classWriter;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("classWriter");
@@ -72,7 +72,7 @@ public class TestDeleteMethod {
         }
 
         public void visitEnd() {
-            ADLog.INSTANCE.info("visitEnd");
+            LogUtils.INSTANCE.info("visitEnd");
             ClassWriter var10000 = this.classWriter;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("classWriter");

@@ -1,7 +1,7 @@
 package com.example.asm.addfield;
 
 import com.example.asm.lifecycle.ClassPrintVisitor;
-import com.example.asm.utils.ADLog;
+import com.example.asm.utils.LogUtils;
 import com.example.asm.utils.ClassOutputUtil;
 
 import org.objectweb.asm.ClassReader;
@@ -32,7 +32,7 @@ public class TestAddField {
                 @Override
                 public FieldVisitor visitField(int access, String name, String descriptor, String signature, Object value) {
 //                    return new FiledVisitorPrinter(super.visitField(access, name, descriptor, signature, value));
-                    ADLog.INSTANCE.info("visitField name ->"+name +", descriptor ->"+descriptor+", value ->"+value);
+                    LogUtils.INSTANCE.info("visitField name ->"+name +", descriptor ->"+descriptor+", value ->"+value);
                     if (name.equals("TAG")){
                         isExists = true;
                     }
@@ -41,7 +41,7 @@ public class TestAddField {
 
                 @Override
                 public void visitEnd() {
-                    ADLog.INSTANCE.info("visitField isExists ->"+isExists +", cv ->"+(cv == null));
+                    LogUtils.INSTANCE.info("visitField isExists ->"+isExists +", cv ->"+(cv == null));
                     if (!isExists){
                         cv.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_STATIC+Opcodes.ACC_FINAL,"TAG","Ljava/lang/String;",null,"TestFile").visitEnd();
                     }

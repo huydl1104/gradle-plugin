@@ -1,6 +1,6 @@
 package com.example.asm.lifecycle;
 
-import com.example.asm.utils.ADLog;
+import com.example.asm.utils.LogUtils;
 import com.example.asm.utils.AccessCodeUtils;
 
 import org.jetbrains.annotations.Nullable;
@@ -33,71 +33,71 @@ public class ClassPrintVisitor extends ClassVisitor {
 
     @Nullable
     public MethodVisitor visitMethod(int access, @Nullable String name, @Nullable String descriptor, @Nullable String signature, @Nullable String[] exceptions) {
-        ADLog.INSTANCE.info("visitMethod：access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name=" + name + ',' + "descriptor=" + descriptor + ',' + "signature=" + signature);
+        LogUtils.INSTANCE.info("visitMethod：access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name=" + name + ',' + "descriptor=" + descriptor + ',' + "signature=" + signature);
         return null;
     }
 
     @Nullable
     public ModuleVisitor visitModule(@Nullable String name, int access, @Nullable String version) {
-        ADLog.INSTANCE.info("visitModule:name=" + name + ",access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",version=" + version);
+        LogUtils.INSTANCE.info("visitModule:name=" + name + ",access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",version=" + version);
         return (ModuleVisitor)(new MyModuleVisitor(this.apiVersion));
     }
 
     public void visitNestHost(@Nullable String nestHost) {
-        ADLog.INSTANCE.info("visitNestHost:nestHost=" + nestHost);
+        LogUtils.INSTANCE.info("visitNestHost:nestHost=" + nestHost);
         super.visitNestHost(nestHost);
     }
 
     public void visitInnerClass(@Nullable String name, @Nullable String outerName, @Nullable String innerName, int access) {
-        ADLog.INSTANCE.info("visitInnerClass:name=" + name + ",outerName=" + outerName + ",innerName:" + innerName + ",access=" + AccessCodeUtils.INSTANCE.accCode2String(access));
+        LogUtils.INSTANCE.info("visitInnerClass:name=" + name + ",outerName=" + outerName + ",innerName:" + innerName + ",access=" + AccessCodeUtils.INSTANCE.accCode2String(access));
         super.visitInnerClass(name, outerName, innerName, access);
     }
 
     public void visitSource(@Nullable String source, @Nullable String debug) {
-        ADLog.INSTANCE.info("visitSource:source=" + source + ",debug=" + debug);
+        LogUtils.INSTANCE.info("visitSource:source=" + source + ",debug=" + debug);
         super.visitSource(source, debug);
     }
 
     public void visitOuterClass(@Nullable String owner, @Nullable String name, @Nullable String descriptor) {
-        ADLog.INSTANCE.info("visitOuterClass:owner:" + owner + ",name=" + name + ",descriptor=" + descriptor);
+        LogUtils.INSTANCE.info("visitOuterClass:owner:" + owner + ",name=" + name + ",descriptor=" + descriptor);
         super.visitOuterClass(owner, name, descriptor);
     }
 
     public void visit(int version, int access, @Nullable String name, @Nullable String signature, @Nullable String superName, @Nullable String[] interfaces) {
-        ADLog.INSTANCE.info("visit:version=" + version + ", access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",signature=" + signature + ",superName=" + superName);
+        LogUtils.INSTANCE.info("visit:version=" + version + ", access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",signature=" + signature + ",superName=" + superName);
         super.visit(version, access, name, signature, superName, interfaces);
     }
 
     public void visitNestMember(@Nullable String nestMember) {
-        ADLog.INSTANCE.info("visitNestMember:nestMember=" + nestMember);
+        LogUtils.INSTANCE.info("visitNestMember:nestMember=" + nestMember);
         super.visitNestMember(nestMember);
     }
 
     @Nullable
     public FieldVisitor visitField(int access, @Nullable String name, @Nullable String descriptor, @Nullable String signature, @Nullable Object value) {
-        ADLog.INSTANCE.info("visitField:access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",descriptor=" + descriptor + ',' + "signature=" + signature + ",value=" + value);
+        LogUtils.INSTANCE.info("visitField:access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",descriptor=" + descriptor + ',' + "signature=" + signature + ",value=" + value);
         return super.visitField(access, name, descriptor, signature, value);
     }
 
     public void visitEnd() {
-        ADLog.INSTANCE.info("visitEnd");
+        LogUtils.INSTANCE.info("visitEnd");
         super.visitEnd();
     }
 
     @Nullable
     public AnnotationVisitor visitAnnotation(@Nullable String descriptor, boolean visible) {
-        ADLog.INSTANCE.info("visitAnnotation:descriptor=" + descriptor + ",visible=" + visible);
+        LogUtils.INSTANCE.info("visitAnnotation:descriptor=" + descriptor + ",visible=" + visible);
         return super.visitAnnotation(descriptor, visible);
     }
 
     @Nullable
     public AnnotationVisitor visitTypeAnnotation(int typeRef, @Nullable TypePath typePath, @Nullable String descriptor, boolean visible) {
-        ADLog.INSTANCE.info("visitTypeAnnotation:typeRef=" + typeRef + ",typePath=" + typePath + ",descriptor=" + descriptor + ",visible=" + visible);
+        LogUtils.INSTANCE.info("visitTypeAnnotation:typeRef=" + typeRef + ",typePath=" + typePath + ",descriptor=" + descriptor + ",visible=" + visible);
         return super.visitTypeAnnotation(typeRef, typePath, descriptor, visible);
     }
 
     public void visitAttribute(@Nullable Attribute attribute) {
-        ADLog.INSTANCE.info("visitAttribute");
+        LogUtils.INSTANCE.info("visitAttribute");
         super.visitAttribute(attribute);
     }
 

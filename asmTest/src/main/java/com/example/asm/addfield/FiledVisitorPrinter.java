@@ -1,6 +1,6 @@
 package com.example.asm.addfield;
 
-import com.example.asm.utils.ADLog;
+import com.example.asm.utils.LogUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,13 +26,13 @@ public class FiledVisitorPrinter extends FieldVisitor {
 
     public void visitEnd() {
         super.visitEnd();
-        ADLog.INSTANCE.info("visitEnd");
+        LogUtils.INSTANCE.info("visitEnd");
 
     }
 
     @NotNull
     public AnnotationVisitor visitAnnotation(@Nullable String descriptor, boolean visible) {
-        ADLog.INSTANCE.info("visitAnnotation, des = " + descriptor + ", visiable = " + visible);
+        LogUtils.INSTANCE.info("visitAnnotation, des = " + descriptor + ", visiable = " + visible);
         AnnotationVisitor var10000 = super.visitAnnotation(descriptor, visible);
         Intrinsics.checkExpressionValueIsNotNull(var10000, "super.visitAnnotation(descriptor, visible)");
         return var10000;
