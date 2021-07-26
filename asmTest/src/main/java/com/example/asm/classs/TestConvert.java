@@ -1,4 +1,4 @@
-package com.example.asm.checkclass;
+package com.example.asm.classs;
 
 import com.example.asm.utils.LogUtils;
 import com.example.asm.utils.AccessCodeUtils;
@@ -33,7 +33,7 @@ public class TestConvert {
 
         @Nullable
         public MethodVisitor visitMethod(int access, @Nullable String name, @Nullable String descriptor, @Nullable String signature, @Nullable String[] exceptions) {
-            LogUtils.INSTANCE.info("[visitMethod],access = " + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name = " + name + ",descriptor=" + descriptor + ",signature=" + signature);
+            LogUtils.info("[visitMethod],access = " + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name = " + name + ",descriptor=" + descriptor + ",signature=" + signature);
             ClassWriter var10000 = this.classWriter;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("classWriter");
@@ -44,7 +44,7 @@ public class TestConvert {
 
         public void visit(int version, int access, @Nullable String name, @Nullable String signature, @Nullable String superName, @Nullable String[] interfaces) {
             this.startTime = System.nanoTime();
-            LogUtils.INSTANCE.info("[visit],version = " + version + ",access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name);
+            LogUtils.info("[visit],version = " + version + ",access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name);
             ClassWriter var10000 = this.classWriter;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("classWriter");
@@ -55,7 +55,7 @@ public class TestConvert {
 
         public void visitEnd() {
             super.visitEnd();
-            LogUtils.INSTANCE.info("[visitEnd], time = " + (System.nanoTime() - this.startTime));
+            LogUtils.info("[visitEnd], time = " + (System.nanoTime() - this.startTime));
         }
     }
 

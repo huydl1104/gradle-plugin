@@ -1,4 +1,4 @@
-package com.example.asm.addfield;
+package com.example.asm.field;
 
 import com.example.asm.lifecycle.ClassPrintVisitor;
 import com.example.asm.utils.LogUtils;
@@ -32,8 +32,8 @@ public class TestAddField {
                 @Override
                 public FieldVisitor visitField(int access, String name, String descriptor, String signature, Object value) {
 //                    return new FiledVisitorPrinter(super.visitField(access, name, descriptor, signature, value));
-                    LogUtils.INSTANCE.info("visitField name ->"+name +", descriptor ->"+descriptor+", value ->"+value);
-                    if (name.equals("TAG")){
+                    LogUtils.info("visitField name ->"+name +", descriptor ->"+descriptor+", value ->"+value);
+                    if (!isExists && name.equals("TAG")){
                         isExists = true;
                     }
                     return super.visitField(access, name, descriptor, signature, value);
@@ -41,8 +41,10 @@ public class TestAddField {
 
                 @Override
                 public void visitEnd() {
-                    LogUtils.INSTANCE.info("visitField isExists ->"+isExists +", cv ->"+(cv == null));
+                    LogUtils.info("visitField isExists ->"+isExists +", cv ->"+(cv == null));
                     if (!isExists){
+                        //添加字段
+//                        cv.visitField(access, name, desc, null, null);
                         cv.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_STATIC+Opcodes.ACC_FINAL,"TAG","Ljava/lang/String;",null,"TestFile").visitEnd();
                     }
                     super.visitEnd();
@@ -57,6 +59,11 @@ public class TestAddField {
             printReader.accept(printVisitor, 0);
 
             ClassOutputUtil.byte2File("asmTest/build/asm/AddFiled.class", writer.toByteArray());
+
+            ClassPrinter classPrinter = new ClassPrinter();
+            ClassReader classReader = new ClassReader("java.lang.Runnable");
+            classReader.accept(classPrinter, 0);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

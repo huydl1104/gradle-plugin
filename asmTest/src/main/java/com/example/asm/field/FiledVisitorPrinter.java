@@ -1,4 +1,4 @@
-package com.example.asm.addfield;
+package com.example.asm.field;
 
 import com.example.asm.utils.LogUtils;
 
@@ -26,13 +26,13 @@ public class FiledVisitorPrinter extends FieldVisitor {
 
     public void visitEnd() {
         super.visitEnd();
-        LogUtils.INSTANCE.info("visitEnd");
+        LogUtils.info("visitEnd");
 
     }
 
     @NotNull
     public AnnotationVisitor visitAnnotation(@Nullable String descriptor, boolean visible) {
-        LogUtils.INSTANCE.info("visitAnnotation, des = " + descriptor + ", visiable = " + visible);
+        LogUtils.info("visitAnnotation, des = " + descriptor + ", visiable = " + visible);
         AnnotationVisitor var10000 = super.visitAnnotation(descriptor, visible);
         Intrinsics.checkExpressionValueIsNotNull(var10000, "super.visitAnnotation(descriptor, visible)");
         return var10000;

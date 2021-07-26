@@ -1,4 +1,4 @@
-package com.example.asm.checkclass;
+package com.example.asm.classs;
 
 import com.example.asm.lifecycle.ClassPrintVisitor;
 import com.example.asm.utils.ClassOutputUtil;
@@ -10,16 +10,23 @@ import org.objectweb.asm.util.CheckClassAdapter;
 
 import java.io.IOException;
 
+import static org.objectweb.asm.Opcodes.ACC_ABSTRACT;
+import static org.objectweb.asm.Opcodes.ACC_FINAL;
+import static org.objectweb.asm.Opcodes.ACC_INTERFACE;
+import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
+import static org.objectweb.asm.Opcodes.ACC_STATIC;
+import static org.objectweb.asm.Opcodes.V1_8;
+
 /**
  * @author yudongliang
  * create time 2021-07-22
  * describe : 检查 class 文件
  */
-public class TestClass {
+public class TestCreateClass {
 
     public static void main(String[] args) {
-        TestClass main = new TestClass();
-        main.exe1();
+        TestCreateClass main = new TestCreateClass();
+        main.exe2();
     }
 
     private void exe1(){
@@ -39,12 +46,26 @@ public class TestClass {
         ClassOutputUtil.byte2File("asmTest/build/asm/Comparable.class", bytes);
     }
 
+    private void exe2(){
+        ClassOutputUtil.byte2File("asmTest/build/asm/Person.class", getPersonBytecode());
+    }
+
+    public static byte[] getPersonBytecode() {
+        ClassWriter cw = new ClassWriter(0);
+        cw.visit(V1_8, ACC_PUBLIC + ACC_ABSTRACT + ACC_INTERFACE, "pkg/Person", null, "java/lang/Object", null);
+        cw.visitField(ACC_PUBLIC + ACC_STATIC + ACC_FINAL, "TAG", "Ljava/lang/String;", null, "Person").visitEnd();
+        cw.visitMethod(ACC_PUBLIC + ACC_ABSTRACT, "getAge", "()I", null, null).visitEnd();
+        cw.visitMethod(ACC_PUBLIC + ACC_ABSTRACT, "setName", "(Ljava/lang/String;)V", null, null).visitEnd();
+        cw.visitEnd();
+        return cw.toByteArray();
+    }
+
     /**
      * 解析 ArrayList
      */
-    private void exe2(){
+    private void exe3(){
         try {
-            ClassReader reader = new ClassReader("java/util.ArrayList");
+            ClassReader reader = new ClassReader("java/util/ArrayList");
 //            ArrayList
             ClassPrintVisitor visitor = new ClassPrintVisitor(Opcodes.ASM9);
             reader.accept(visitor,ClassReader.SKIP_DEBUG);

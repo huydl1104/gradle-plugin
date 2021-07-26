@@ -1,4 +1,4 @@
-package com.example.asm.createMethod;
+package com.example.asm.method;
 
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodNode;

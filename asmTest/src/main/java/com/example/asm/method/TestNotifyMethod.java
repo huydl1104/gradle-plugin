@@ -1,4 +1,4 @@
-package com.example.asm.notifymethod;
+package com.example.asm.method;
 
 import com.example.asm.utils.LogUtils;
 import com.example.asm.utils.ClassOutputUtil;

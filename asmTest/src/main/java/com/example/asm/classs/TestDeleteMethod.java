@@ -1,4 +1,4 @@
-package com.example.asm.checkclass;
+package com.example.asm.classs;
 
 import com.example.asm.lifecycle.ClassPrintVisitor;
 import com.example.asm.utils.LogUtils;

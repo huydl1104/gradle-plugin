@@ -1,4 +1,4 @@
-package com.example.asm.createclass;
+package com.example.asm.classs;
 
 import com.example.asm.utils.ClassOutputUtil;
 
