@@ -1,7 +1,7 @@
 package com.example.asm.utils
 
 object LogUtils {
-    private const val TAG = "Andoter"
+    private const val TAG = "yudl"
     var debug = false
 
     /**
