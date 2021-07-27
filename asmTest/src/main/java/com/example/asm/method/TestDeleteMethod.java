@@ -1,4 +1,4 @@
-package com.example.asm.classs;
+package com.example.asm.method;
 
 import com.example.asm.lifecycle.ClassPrintVisitor;
 import com.example.asm.utils.LogUtils;
@@ -16,6 +16,8 @@ import java.io.IOException;
 
 import kotlin.jvm.internal.Intrinsics;
 
+import static org.objectweb.asm.Opcodes.ASM9;
+
 /**
  * @author yudongliang
  * create time 2021-07-22
@@ -23,7 +25,7 @@ import kotlin.jvm.internal.Intrinsics;
  */
 public class TestDeleteMethod {
 
-    class DeleteDebugAdapter extends ClassVisitor{
+    static class DeleteDebugAdapter extends ClassVisitor{
 
         public ClassWriter classWriter;
 
@@ -34,7 +36,7 @@ public class TestDeleteMethod {
 
         @Nullable
         public MethodVisitor visitMethod(int access, @Nullable String name, @Nullable String descriptor, @Nullable String signature, @Nullable String[] exceptions) {
-            LogUtils.INSTANCE.info("visitMethod：access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name=" + name + ',' + "descriptor=" + descriptor + ',' + "signature=" + signature);
+            LogUtils.info("visitMethod：access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name=" + name + ',' + "descriptor=" + descriptor + ',' + "signature=" + signature);
             if ("setDebugValue".equals(name)) {
                 return null;
             } else {
@@ -47,11 +49,11 @@ public class TestDeleteMethod {
         }
 
         public void visitSource(@Nullable String source, @Nullable String debug) {
-            LogUtils.INSTANCE.info("visitSource: source = " + source + ", debug = " + debug);
+            LogUtils.info("visitSource: source = " + source + ", debug = " + debug);
         }
 
         public void visit(int version, int access, @Nullable String name, @Nullable String signature, @Nullable String superName, @Nullable String[] interfaces) {
-            LogUtils.INSTANCE.info("visit: version=" + version + ", access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",signature=" + signature + ",superName=" + superName);
+            LogUtils.info("visit: version=" + version + ", access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",signature=" + signature + ",superName=" + superName);
             ClassWriter var10000 = this.classWriter;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("classWriter");
@@ -62,7 +64,7 @@ public class TestDeleteMethod {
 
         @Nullable
         public FieldVisitor visitField(int access, @Nullable String name, @Nullable String descriptor, @Nullable String signature, @Nullable Object value) {
-            LogUtils.INSTANCE.info("visitField: access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",descriptor=" + descriptor + ',' + "signature=" + signature + ",value=" + value);
+            LogUtils.info("visitField: access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ",name=" + name + ",descriptor=" + descriptor + ',' + "signature=" + signature + ",value=" + value);
             ClassWriter var10000 = this.classWriter;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("classWriter");
@@ -72,7 +74,7 @@ public class TestDeleteMethod {
         }
 
         public void visitEnd() {
-            LogUtils.INSTANCE.info("visitEnd");
+            LogUtils.info("visitEnd");
             ClassWriter var10000 = this.classWriter;
             if (var10000 == null) {
                 Intrinsics.throwUninitializedPropertyAccessException("classWriter");
@@ -80,6 +82,27 @@ public class TestDeleteMethod {
             var10000.visitEnd();
         }
 
+    }
+
+     static class RemoveMethodAdapter extends ClassVisitor {
+
+        private final String name;
+        private final String desc;
+
+        public RemoveMethodAdapter(ClassVisitor cv, String name, String desc) {
+            super(ASM9, cv);
+            this.name = name;
+            this.desc = desc;
+        }
+
+        @Override
+        public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
+            // 当匹配时，不委托给下一个 ClassVisitor，这样将移除该方法
+            if (name.equals(this.name) && descriptor.equals(this.desc)) {
+                return null;
+            }
+            return super.visitMethod(access, name, descriptor, signature, exceptions);
+        }
     }
 
     public static void main(String[] args) {
@@ -91,7 +114,7 @@ public class TestDeleteMethod {
         try {
             ClassReader reader = new ClassReader("com/example/asm/testfile/ConvertFile");
             ClassWriter writer = new ClassWriter(reader,ClassWriter.COMPUTE_MAXS);
-            DeleteDebugAdapter adapter = new DeleteDebugAdapter(writer);
+            RemoveMethodAdapter adapter = new RemoveMethodAdapter(writer, "getDebugMode", "()Z");
             reader.accept(adapter,0);
 
 
