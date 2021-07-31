@@ -33,8 +33,9 @@ public class ClassPrintVisitor extends ClassVisitor {
 
     @Nullable
     public MethodVisitor visitMethod(int access, @Nullable String name, @Nullable String descriptor, @Nullable String signature, @Nullable String[] exceptions) {
-        LogUtils.INSTANCE.info("visitMethod：access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name=" + name + ',' + "descriptor=" + descriptor + ',' + "signature=" + signature);
-        return null;
+        LogUtils.info("visitMethod：access=" + AccessCodeUtils.INSTANCE.accCode2String(access) + ',' + "name=" + name + ',' + "descriptor=" + descriptor + ',' + "signature=" + signature);
+        MethodVisitor mv = super.visitMethod(access, name, descriptor, signature, exceptions);
+        return new MethodPrint(mv);
     }
 
     @Nullable
