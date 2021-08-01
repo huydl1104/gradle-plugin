@@ -49,6 +49,16 @@ public class TestType {
             e.printStackTrace();
         }
 
+        LogUtils.info("void type descriptor: " + Type.VOID_TYPE.getDescriptor()); // V
+        LogUtils.info("boolean type descriptor: " + Type.BOOLEAN_TYPE.getDescriptor()); // Z
+        LogUtils.info("char type descriptor: " + Type.CHAR_TYPE.getDescriptor()); // C
+        LogUtils.info("byte type descriptor: " + Type.BYTE_TYPE.getDescriptor()); // B
+        LogUtils.info("short type descriptor: " + Type.SHORT_TYPE.getDescriptor()); // S
+        LogUtils.info("int type descriptor: " + Type.INT_TYPE.getDescriptor()); // I
+        LogUtils.info("float type descriptor: " + Type.FLOAT_TYPE.getDescriptor()); // F
+        LogUtils.info("long type descriptor: " + Type.LONG_TYPE.getDescriptor()); // J
+        LogUtils.info("double type descriptor: " + Type.DOUBLE_TYPE.getDescriptor()); // D
+        LogUtils.info("string type descriptor: " + Type.getType(String.class).getDescriptor()); // Ljava/lang/String;
 
     }
 
