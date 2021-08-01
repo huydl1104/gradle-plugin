@@ -1,3 +1,4 @@
+include ':threadCanary'
 include ':asmTest'
 include ':buildTimeCost'
 include ':greeting'

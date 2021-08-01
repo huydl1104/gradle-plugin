@@ -1,0 +1,61 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+gradlePlugin {
+    plugins {
+        create("myplugin") {
+            id = "com.example.threadcanary"
+            implementationClass = "com.example.threadcanary.ThreadCanaryPlugin"
+        }
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.example.threadcanary'
+            artifactId = 'library'
+            version = '1.0'
+
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation gradleApi()
+
+    //引入asm库
+    implementation 'org.ow2.asm:asm:9.2'
+    implementation 'org.ow2.asm:asm-commons:9.2'
+    implementation 'org.ow2.asm:asm-analysis:9.2'
+    implementation 'org.ow2.asm:asm-util:9.2'
+    implementation 'org.ow2.asm:asm-tree:9.2'
+    compileOnly 'com.android.tools.build:gradle:4.1.1', {//这里注意需要保持版本一致，否则会报错
+        //排除gradle自带的asm库
+        exclude group:'org.ow2.asm'
+    }
+}
