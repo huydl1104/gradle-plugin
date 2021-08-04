@@ -10,35 +10,40 @@ import com.android.build.api.transform.TransformInvocation
 class ThreadTransformImpl :AbstractThreadTransform() {
 
     private val transformHandlers = setOf(
-            ReplaceClassNameTransform(
-                    mapOf(
-                            "java.util.concurrent.ForkJoinPool" to "com.airsaid.threadcanary.shadow.ShadowForkJoinPool",
-                            "android.os.HandlerThread" to "com.airsaid.threadcanary.shadow.ShadowHandlerThread",
-                            "java.util.concurrent.ScheduledThreadPoolExecutor" to "com.airsaid.threadcanary.shadow.ShadowScheduledThreadPoolExecutor",
-                            "java.util.concurrent.ThreadPoolExecutor" to "com.airsaid.threadcanary.shadow.ShadowThreadPoolExecutor",
-                            "java.lang.Thread" to "com.airsaid.threadcanary.shadow.ShadowThread",
-                            "java.util.Timer" to "com.airsaid.threadcanary.shadow.ShadowTimer",
+            ReplaceClassNameTransform(mapOf(
+                            "java.util.concurrent.ForkJoinPool" to "com.example.testthread.shadow.ShadowForkJoinPool",
+                            "android.os.HandlerThread" to "com.example.testthread.shadow.ShadowHandlerThread",
+                            "java.util.concurrent.ScheduledThreadPoolExecutor" to "com.example.testthread.shadow.ShadowScheduledThreadPoolExecutor",
+                            "java.util.concurrent.ThreadPoolExecutor" to "com.example.testthread.shadow.ShadowThreadPoolExecutor",
+                            "java.lang.Thread" to "com.example.testthread.shadow.ShadowThread",
+                            "java.util.Timer" to "com.example.testthread.shadow.ShadowTimer",
                     )
             ),
             ReplaceStaticMethodTransform(
-                    mapOf(
-                            "java.util.concurrent.Executors" to "com.airsaid.threadcanary.shadow.ShadowExecutors",
-                    )
+                    mapOf("java.util.concurrent.Executors" to "com.example.testthread.shadow.ShadowExecutors", )
             )
     )
 
-    override fun transformBefore(transformInvocation: TransformInvocation) {
+    override fun getName(): String {
+        return "y-ThreadTransformImpl"
+    }
 
+    override fun transformBefore(transformInvocation: TransformInvocation) {
+        transformHandlers.forEach { it.transformBefore(transformInvocation) }
     }
 
     override fun onTransform(
         transformInvocation: TransformInvocation,
         bytecode: ByteArray
     ): ByteArray {
-
+        var classBytes = bytecode
+        transformHandlers.forEach {
+            classBytes = it.onTransform(transformInvocation,bytecode)
+        }
+        return classBytes
     }
 
     override fun transformAfter(transformInvocation: TransformInvocation) {
-
+        transformHandlers.forEach { it.transformAfter(transformInvocation) }
     }
 }
