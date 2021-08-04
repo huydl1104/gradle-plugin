@@ -7,7 +7,9 @@
       <module name="plugin.buildTimeCost" target="1.8" />
       <module name="plugin.filePlugin" target="1.8" />
       <module name="plugin.greeting" target="1.8" />
+      <module name="plugin.testThread" target="1.8" />
       <module name="plugin.threadCanaryPlugin" target="1.8" />
+      <module name="plugin.threadcannary" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

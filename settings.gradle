@@ -1,3 +1,4 @@
+include ':testThread'
 include ':threadCanaryPlugin'
 include ':asmTest'
 include ':buildTimeCost'

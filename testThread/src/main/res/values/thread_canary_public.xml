@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <public name="thread_canary_add_launcher_icon" type="bool"/>
+    <public name="thread_canary_display_activity_label" type="string"/>
+</resources>

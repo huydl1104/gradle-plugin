@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thread_canary_display_activity_label" translatable="false">Threads</string>
+    <string name="thread_canary_threads">%d Threads</string>
+    <string name="thread_canary_tab_threads">Threads</string>
+    <string name="thread_canary_tab_settings">Settings</string>
+    <string name="thread_canary_notification_channel_name">Threads Warning</string>
+    <string name="thread_canary_notification_channel_desc">Send a warning notification when the number of threads is excessive</string>
+    <string name="thread_canary_notification_title">Threads over %d!</string>
+    <string name="thread_canary_notification_content">Tap for more details</string>
+    <string name="thread_canary_setting_warning_notification">Threads Warning Notification</string>
+    <string name="thread_canary_setting_warning_threads">Number of Warning Threads</string>
+    <string name="thread_canary_share_stack_trace">Share stack trace</string>
+    <string name="thread_canary_refresh_threads">Refresh threads</string>
+    <string name="thread_canary_no_stack_trace_info">No stack trace information</string>
+    <string name="thread_canary_see_detail">See details</string>
+
+    <string-array name="thread_canary_warning_threads">
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
+        <item>900</item>
+        <item>1000</item>
+    </string-array>
+</resources>
