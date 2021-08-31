@@ -1,3 +1,4 @@
 include ':myPlugin'
 include ':app'
+include ':asmTest'
 rootProject.name = "plugin"
