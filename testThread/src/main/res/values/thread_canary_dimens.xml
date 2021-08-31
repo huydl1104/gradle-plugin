@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="thread_canary_stack_trace_connector_line_width">2dp</dimen>
+    <dimen name="thread_canary_stack_trace_connector_arrowhead_size">6dp</dimen>
+    <dimen name="thread_canary_stack_trace_connector_circle_radius">6dp</dimen>
+</resources>

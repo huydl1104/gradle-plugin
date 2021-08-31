@@ -12,7 +12,13 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/asmTest" />
+            <option value="$PROJECT_DIR$/buildTimeCost" />
+            <option value="$PROJECT_DIR$/greeting" />
             <option value="$PROJECT_DIR$/myPlugin" />
+            <option value="$PROJECT_DIR$/testThread" />
+            <option value="$PROJECT_DIR$/testwork" />
+            <option value="$PROJECT_DIR$/threadCanaryPlugin" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

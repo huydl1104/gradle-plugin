@@ -1,4 +1,9 @@
+include ':testwork'
+include ':testThread'
+include ':threadCanaryPlugin'
+include ':asmTest'
+include ':buildTimeCost'
+include ':greeting'
 include ':myPlugin'
 include ':app'
-include ':asmTest'
 rootProject.name = "plugin"

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="thread_canary_primary">#212121</color>
+    <color name="thread_canary_primary_light">#484848</color>
+    <color name="thread_canary_primary_dark">#000000</color>
+
+    <color name="thread_canary_second">#C84B31</color>
+    <color name="thread_canary_second_light">#ff7b5c</color>
+    <color name="thread_canary_second_dark">#911708</color>
+
+    <color name="thread_canary_text_color">#FFFFFF</color>
+    <color name="thread_canary_text_highlighting">#D0411F</color>
+
+    <color name="thread_canary_thread_pool_bg">#393E46</color>
+    <color name="thread_canary_gray_darkest">#151C1F</color>
+    <color name="thread_canary_gray_darkest_40p">#66151C1F</color>
+    <color name="thread_canary_gray_darkest_25p">#40151C1F</color>
+
+    <color name="thread_canary_stack_trace_connector_circle">#FFFFFF</color>
+    <color name="thread_canary_stack_trace_connector_line">#FFFFFF</color>
+</resources>

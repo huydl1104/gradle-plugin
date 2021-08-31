@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/thread_canary_refresh">
+    <target
+        android:animation="@animator/thread_canary_path_rotate"
+        android:name="rotationGroup"/>
+</animated-vector>
