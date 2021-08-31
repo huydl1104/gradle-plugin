@@ -1,0 +1,91 @@
+import org.gradle.work.Incremental
+import org.gradle.work.InputChanges
+
+//1、hello world 任务
+abstract class GreetingTask extends DefaultTask {
+
+    @Input
+    abstract Property<String> getGreeting()
+
+    GreetingTask() {
+        greeting.convention('hello from GreetingTask')
+    }
+    @TaskAction
+    void greet() {
+        println greeting.get()
+    }
+}
+tasks.register("helloWordConfig",GreetingTask.class){//使用配置的GreetingTask
+    greeting = "123123"
+}
+tasks.register('helloWord', GreetingTask.class)//使用默认的GreetingTask
+
+/*
+//2、定义增量任务操作
+abstract class IncrementalReverseTask extends DefaultTask{
+
+    @Incremental
+    @PathSensitive(PathSensitivity.NAME_ONLY)//只考虑文件的和目录的名称
+    @InputDirectory
+    abstract DirectoryProperty getInputDir()
+
+    @OutputDirectory
+    abstract DirectoryProperty getOutputDir()
+
+    @TaskAction
+    def execute(InputChanges inputChanges){
+        println(inputChanges.incremental
+                ? 'Executing incrementally'
+                : 'Executing non-incrementally'
+        )
+        inputChanges.getFileChanges(inputDir).each { change ->
+            if (change.fileType == FileType.DIRECTORY) return
+
+            println "${change.changeType}: ${change.normalizedPath}"
+            def targetFile = outputDir.file(change.normalizedPath).get().asFile
+            if (change.changeType == ChangeType.REMOVED) {
+                targetFile.delete()
+            } else {
+                targetFile.text = change.file.text.reverse()
+            }
+        }
+
+    }
+}
+
+tasks.register('incrementalReverse', IncrementalReverseTask) {
+    inputDir = file('config/inputs')
+    outputDir = file("$buildDir/outputs")
+    inputProperty = project.properties['taskInputProperty'] ?: 'original'
+}
+tasks.register('updateInputs') {
+    outputs.dir('config/inputs')
+    doLast {
+        file('config/inputs/1.txt').text = 'Changed content for existing file 1.'//修改：1.txt
+        file('config/inputs/4.txt').text = 'Content for new file 4.' //添加：4.txt
+    }
+}
+tasks.register('removeInput') {
+    outputs.dir('config/inputs')
+    doLast {
+        file('config/inputs/3.txt').delete()
+    }
+}
+tasks.register('removeOutput') {
+    outputs.dir("$buildDir/outputs")
+    doLast {
+        file("$buildDir/outputs/1.txt").delete()//删除1.txt
+    }
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
