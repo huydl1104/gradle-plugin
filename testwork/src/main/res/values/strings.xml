@@ -12,4 +12,5 @@
     <string name="type_something">type something…</string>
     <string name="open_activity_and_change_text">Open activity and change text</string>
     <string name="waiting_msg">Waiting for message…</string>
+    <string name="button_open_camera">Take photo</string>
 </resources>
