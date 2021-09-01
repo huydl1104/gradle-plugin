@@ -1,14 +1,22 @@
 
 package com.example.testwork;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
+
+import com.example.testwork.calculator.Calculator;
+import com.example.testwork.calculator.CalculatorActivity;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -63,6 +71,56 @@ public class CalculatorTest {
     public void mulTwoNumbers() {
         double resultMul = mCalculator.mul(32d, 2d);
         assertThat(resultMul, is(equalTo(64d)));
+    }
+
+    @Before
+    public void launcherActivity(){
+        System.out.println("CalculatorTest  launcherActivity ");
+        ActivityScenario.launch(CalculatorActivity.class);
+    }
+
+    @Test
+    public void typeOperandsAndPerformAddOperation() {
+        performOperation(R.id.operation_add_btn, "16.0", "16.0", "32.0");
+    }
+
+    @Test
+    public void typeOperandsAndPerformSubOperation() {
+        performOperation(R.id.operation_sub_btn, "32.0", "16.0", "16.0");
+    }
+
+    @Test
+    public void typeOperandsAndPerformDivOperation() {
+        performOperation(R.id.operation_div_btn, "128.0", "16.0", "8.0");
+    }
+
+    @Test
+    public void divZeroForOperandTwoShowsError() {
+        final String expectedResult = ApplicationProvider.getApplicationContext().getString(R.string.computationError);
+        performOperation(R.id.operation_div_btn, "128.0", "0.0", expectedResult);
+    }
+
+    @Test
+    public void typeOperandsAndPerformMulOperation() {
+        performOperation(R.id.operation_mul_btn, "16.0", "16.0", "256.0");
+    }
+
+    private void performOperation(int btnOperationResId, String operandOne,
+                                  String operandTwo, String expectedResult) {
+        Espresso.onView(ViewMatchers.withId(R.id.operand_one_edit_text)).perform(ViewActions.typeText(operandOne),
+                ViewActions.closeSoftKeyboard());
+        Espresso.onView(ViewMatchers.withId(R.id.operand_two_edit_text)).perform(ViewActions.typeText(operandTwo),
+                ViewActions.closeSoftKeyboard());
+
+        // Click on a given operation button
+        Espresso.onView(ViewMatchers.withId(btnOperationResId)).perform(ViewActions.click());
+        // Check the expected test is displayed in the Ui
+        Espresso.onView(ViewMatchers.withId(R.id.operation_result_text_view)).check(ViewAssertions.matches(ViewMatchers.withText(expectedResult)));
+    }
+
+    @After
+    public void destroyActivity(){
+        System.out.println("CalculatorTest  destroyActivity ");
     }
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.testwork;
+package com.example.testwork.calculator;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
